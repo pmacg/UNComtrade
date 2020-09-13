@@ -1,6 +1,8 @@
 # UNComtrade
 Some Python scripts which are useful for the UN Comtrade dataset. Not complete at the moment, will add more funcionality over time. Code mostly meant as started code at the moment, feel free to implement your own functionalities and PR :)
 
+In `./data/` I've included 2 folders of cleaned up csv files for both oil (HS code 27) and wood (HS code 44) for 1988-2017.
+
 ## Installation
 Install needed packages using conda: `conda env create -f environment.yml`
 
