@@ -1,0 +1,14 @@
+*.log
+*.pyc
+*.pdf
+shopt
+*~
+*.dta
+*.png
+*.PNG
+*.gif
+*.mp4
+*.PNG
+*.png
+*.jpg
+*#

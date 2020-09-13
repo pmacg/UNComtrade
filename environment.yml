@@ -1,0 +1,8 @@
+name: UNComtrade
+channels:
+- conda-forge
+- defaults
+dependencies:
+- pandas
+- numpy
+- scipy
