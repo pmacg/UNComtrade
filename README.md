@@ -1,8 +1,11 @@
 # UNComtrade
 Some Python scripts which are useful for the UN Comtrade dataset
 
+## Installation
 Install needed packages using conda: `conda env create -f environment.yml`
 
+
+## Use
 To create the adjacency matrix: `python create_adjacency_matrix.py`
 
 Code mostly meant as started code. Feel free to copy it and use for your own purposes.
