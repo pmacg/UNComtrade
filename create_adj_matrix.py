@@ -4,6 +4,7 @@ import numpy as np
 import scipy.linalg as linalg
 
 def main():
+    # select which year and which data you want to use for creating the adjacency matrix
     year = 2010
     data_file = './data/oil_27/processed_data_' + str(year) +  '_27.csv'
     
@@ -13,9 +14,8 @@ def main():
     matrix = create_adjacency_matrix(import_export_dic, id_to_matrixid,
                                      matrixid_to_id, len(country_codes_withdata))
 
-    print(matrix)
-    print(matrix.shape)
-    
+    print("\n >>> adjacency matrix:", matrix)
+
 
 def create_adjacency_matrix(impexp_dic, id_to_matrixid, matrixid_to_id, n):
     """creates a Hermitian adjacency matrix for the UN GlobalCom_data"""
@@ -150,6 +150,8 @@ def preprocess_year(data_file):
 
     # if countries report different trade values (as reporting and partner countries with each other,
     # we take the average of both values. If only one of them reports value we take that one.
+    # One can also replace the average with the maximum of two values, this is more commonly done
+    # in the literature.
     for pair in import_export_dic:
         original = import_export_dic[(pair[0], pair[1])]
         reverse = import_export_dic[(pair[1], pair[0])]
