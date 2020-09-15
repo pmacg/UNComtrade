@@ -7,7 +7,11 @@ In `./data/` I've included 2 folders of cleaned up csv files for both oil (HS co
 Install needed packages using conda: `conda env create -f environment.yml`
 
 ## How to Use
-To create the adjacency matrix: `python create_adjacency_matrix.py`
+To create the adjacency matrix: `python3 create_adjacency_matrix.py <commodity> <year> <output_file>`
+Where commodity can be one of "oil" or "wood", year should be between 1988 and 2017, and output_file is the name of the file you would like the script to save the adjacency matrix to.
+
+The script will save the matrix in the numpy `.npy` format to the file specified on the command line.
+This can be loaded into another script using the `numpy.load()` method.
 
 ## Information
 Information about the UN comtrade dataset can be found here: https://comtrade.un.org/

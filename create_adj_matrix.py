@@ -1,12 +1,35 @@
+#!/usr/bin/env python3
+"""
+Construct an adjacency matrix of a directed graph from the Comtrade UN dataset.
+Saves the matrix in the numpy .npy format to the file specified on the command
+line.
+"""
 import pandas as pd
 import csv
 import numpy as np
 import scipy.linalg as linalg
+import argparse
+
+
+def parse_args():
+    """
+    Parse the command line arguments using argparser
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "commodity",
+        help="the trading commodity to create a graph for. One of 'oil' or 'wood'")
+    parser.add_argument("year", help="which year's data to parse")
+    parser.add_argument("output_file", help="the file to save the adjacency matrix to")
+    return parser.parse_args()
+
 
 def main():
+    # Parse the command line arguments
+    args = parse_args()
+
     # select which year and which data you want to use for creating the adjacency matrix
-    year = 2010
-    data_file = './data/oil_27/processed_data_' + str(year) +  '_27.csv'
+    data_file = f"./data/{args.commodity}/processed_data_{args.year}.csv"
     
     import_export_dic, id_to_matrixid, matrixid_to_id, \
     country_codes_withdata, id_to_country_dic, country_to_iso = preprocess_year(data_file)
@@ -14,11 +37,12 @@ def main():
     matrix = create_adjacency_matrix(import_export_dic, id_to_matrixid,
                                      matrixid_to_id, len(country_codes_withdata))
 
-    print("\n >>> adjacency matrix:", matrix)
+    # Save the generated adjacency matrix to file
+    np.save(args.output_file, matrix)
 
 
 def create_adjacency_matrix(impexp_dic, id_to_matrixid, matrixid_to_id, n):
-    """creates a Hermitian adjacency matrix for the UN GlobalCom_data"""
+    """creates an assymetric adjacency matrix for the UN GlobalCom_data"""
 
     adj_matrix = np.zeros((n,n))
 
