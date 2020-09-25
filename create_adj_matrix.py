@@ -60,8 +60,8 @@ def create_adjacency_matrix(impexp_dic, id_to_matrixid, matrixid_to_id, n):
 
     return adj_matrix*(adj_matrix > 0)
 
+
 def preprocess_year(data_file):
-    
     # list of country names
     countries = []
     # list of country idx
