@@ -20,7 +20,8 @@ def parse_args():
         "commodity",
         help="the trading commodity to create a graph for. One of 'oil' or 'wood'")
     parser.add_argument("year", help="which year's data to parse")
-    parser.add_argument("output_file", help="the file to save the adjacency matrix to")
+    parser.add_argument("matrix_file", help="the file to save the adjacency matrix to")
+    parser.add_argument("country_file", help="the file to save the mapping of countries to nodes to")
     return parser.parse_args()
 
 
@@ -37,8 +38,34 @@ def main():
     matrix = create_adjacency_matrix(import_export_dic, id_to_matrixid,
                                      matrixid_to_id, len(country_codes_withdata))
 
+    # Get the mapping of countries to vertices
+    country_to_vertex = create_country_map(id_to_country_dic, id_to_matrixid)
+    save_dict_to_csv(args.country_file, country_to_vertex)
+
     # Save the generated adjacency matrix to file
-    np.save(args.output_file, matrix)
+    np.save(args.matrix_file, matrix)
+
+
+def create_country_map(id_to_country, id_to_vertex):
+    """
+    Given two dictionaries, the first mapping country names to ids and the second
+    mapping ids to vertex numbers in the graph, return the dictionary mapping
+    countries to vertex numbers.
+    """
+    country_to_vertex = {}
+
+    for idnum in id_to_country:
+        country_to_vertex[id_to_country[idnum]] = id_to_vertex[idnum]
+
+    return country_to_vertex
+
+
+def save_dict_to_csv(filename, data):
+    """Given a dictionary, save the entries in csv format to the given file."""
+    with open(filename, 'w') as fout:
+        for key in data:
+            value = data[key]
+            fout.write(f"{key}, {value}\n")
 
 
 def create_adjacency_matrix(impexp_dic, id_to_matrixid, matrixid_to_id, n):
